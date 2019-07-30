@@ -18,12 +18,12 @@
         "sensio/distribution-bundle"           : "~3.0.36",
         "sensio/framework-extra-bundle"        : "~3.0.16",
         "symfony/assetic-bundle"               : "~2.8",
-        "symfony/symfony"                      : "~2.7.19",
+        "symfony/symfony"                      : "2.8.*",
         "twig/extensions"                      : "~1.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.5",
-        "codeception/codeception": "~2.2.5"
+        "codeception/codeception": "~3.0.*"
     },
     "scripts": {
         "post-install-cmd": [
