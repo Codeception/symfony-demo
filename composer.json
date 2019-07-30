@@ -23,7 +23,7 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.5",
-        "codeception/codeception": "~3.0.*"
+        "codeception/codeception": "3.0.*"
     },
     "scripts": {
         "post-install-cmd": [
