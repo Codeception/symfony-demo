@@ -10,7 +10,7 @@ cache:
 env:
   global:
     - SYMFONY_PHPUNIT_DIR=./bin/.phpunit
-    - SYMFONY_DEPRECATIONS_HELPER=29
+    - SYMFONY_DEPRECATIONS_HELPER=0
     - ACTION="install"
 
 matrix:
@@ -63,4 +63,4 @@ script:
   # this checks that Doctrine's mapping configurations are valid
   - ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
   #  Fail CI if the repo is in a dirty state after building assets (only for current release ie install)
-  -  if [[ "$ACTION" == "install" ]]; then yarn install && yarn encore production && git add --all && git diff --staged --exit-code; fi
+  #-  if [[ "$ACTION" == "install" ]]; then yarn install && yarn encore production && git add --all && git diff --staged --exit-code; fi
