@@ -1,5 +1,5 @@
- doctrine:
-     orm:
+doctrine:
+    orm:
         auto_generate_proxy_classes: false
         metadata_cache_driver:
             type: service
