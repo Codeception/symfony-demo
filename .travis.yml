@@ -18,14 +18,10 @@ matrix:
   include:
     - php: 7.2
     - php: 7.3
-    # 'php: nightly' is PHP 8.0
-    - php: 7.4snapshot
-    - php: 7.3
-      env: SYMFONY="4.4.*"
-           ACTION="update"
-    - php: 7.3
       env: SYMFONY="5.0.*"
            ACTION="update"
+    # 'php: nightly' is PHP 8.0
+    - php: 7.4snapshot
   allow_failures:
     - php: 7.4snapshot
 
