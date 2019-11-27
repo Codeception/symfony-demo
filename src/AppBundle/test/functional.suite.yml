@@ -7,11 +7,11 @@
 class_name: FunctionalTester
 modules:
     enabled:
-        - Symfony2:
+        - Symfony:
             app_path: '../../app'
             var_path: '../../app'
         - Doctrine2:
-            depends: Symfony2
+            depends: Symfony
         - \AcmeBundle\Helper\Functional
         - Asserts
         - Sequence
