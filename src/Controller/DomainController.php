@@ -12,7 +12,7 @@
 namespace App\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Route("/domain")
  */
-class DomainController extends Controller
+class DomainController extends AbstractController
 {
     /**
      * @Route("/", name="domain_index", host="example.com")
