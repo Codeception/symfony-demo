@@ -27,7 +27,7 @@ before_install:
 
 install:
   - COMPOSER_MEMORY_LIMIT=-1 composer update
-  - ./bin/console server:start
+  - 'php -S localhost:8000 -t public/ >/dev/null 2>&1 &'
   - ./vendor/bin/codecept build
 
 script:
