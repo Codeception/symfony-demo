@@ -40,7 +40,7 @@
         "twig/twig": "^2.6"
     },
     "require-dev": {
-        "codeception/codeception": "dev-4.0-symfony5 as 4.0.x-dev",
+        "codeception/codeception": "^4.0",
         "codeception/module-asserts": "^1.0",
         "codeception/module-doctrine2": "^1.0",
         "codeception/module-phpbrowser": "^1.0",
