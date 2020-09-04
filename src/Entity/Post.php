@@ -14,18 +14,20 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  * @ORM\Table(name="symfony_demo_post")
+ * @UniqueEntity(fields={"slug"}, errorPath="title", message="post.slug_unique")
  *
  * Defines the properties of the Post entity to represent the blog posts.
  *
- * See https://symfony.com/doc/current/book/doctrine.html#creating-an-entity-class
+ * See https://symfony.com/doc/current/doctrine.html#creating-an-entity-class
  *
  * Tip: if you have an existing database, you can generate these entity class automatically.
- * See https://symfony.com/doc/current/cookbook/doctrine/reverse_engineering.html
+ * See https://symfony.com/doc/current/doctrine/reverse_engineering.html
  *
  * @author Ryan Weaver <weaverryan@gmail.com>
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
@@ -37,7 +39,7 @@ class Post
      * Use constants to define configuration options that rarely change instead
      * of specifying them under parameters section in config/services.yaml file.
      *
-     * See https://symfony.com/doc/current/best_practices/configuration.html#constants-vs-configuration-options
+     * See https://symfony.com/doc/current/best_practices.html#use-constants-to-define-options-that-rarely-change
      */
     public const NUM_ITEMS = 10;
 

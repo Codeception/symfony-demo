@@ -22,7 +22,7 @@
       "js": [
         "/build/runtime.js",
         "/build/0.js",
-        "/build/2.js",
+        "/build/1.js",
         "/build/admin.js"
       ],
       "css": [
@@ -40,14 +40,13 @@
   },
   "integrity": {
     "/build/runtime.js": "sha384-/Zh0hTCgqMfXwZfeMIiueZzsKiHkvtqEOzKpZAuznIbgqg1DQpUQAwwNlO/9ToVH",
-    "/build/0.js": "sha384-Dt6rncfcL40e91sPDLy/fZ8XgfH6ZZmLY1+ajXaPmGFGTb5XNtWS5jmf84NoZT/f",
-    "/build/1.js": "sha384-bmKW9QGT6CjdvJr6hoYLCByhKzyjU+g+gUJ5SGOSxqUm4jzLuBhDpl0hImY/1R3M",
-    "/build/app.js": "sha384-uCtNC3fXHx82+vdtTkHRXofGzNn6MJtN1ChaO2RaxA2IaRj/Ybj3QNldmJ6X0jI1",
-    "/build/app.css": "sha384-NGTdnyfcvVpvCvvEryRps/xU6Mb67YeTf1pvFrUkd80uXKIuxzYmcXzvzttKu4d0",
+    "/build/0.js": "sha384-D6jl+wUofxqAscXF0x3XeJNCPY86NJbutImu7kbOQ+8bLGsIevb3P8ZE2XytZzE+",
+    "/build/1.js": "sha384-OZSnF+Rdm8EKeVBpGNcYFqPNeyJDJJ6cpvGEgymSWOggkuF32YKLfPOV2dMqoLn7",
+    "/build/app.js": "sha384-/4mThpJToT6mufMi+NF6N34DDjMlmoNkDd/MxF2ZQbMSjaTAmcLguTRa/hfezESX",
+    "/build/app.css": "sha384-iP543kj0TmPSPvzeVbKnNzvN+mMBT+Rf2WEBbN9B35qNPaoPW5ImMK6Ij0/FUVlV",
     "/build/login.js": "sha384-w5qwGnj2mp4pazKe9KGCQU+FR1n/717WouCp594UxY7HHGLafcGrZ9mrFR68V6oe",
-    "/build/2.js": "sha384-zrtPryvCde+sRepOgkuLELopii2NoIgS3rrkpCfY8e7nT359Sc0tXRG2QqsKLfEO",
-    "/build/admin.js": "sha384-My30UK7GowsN0RikK0XGQk7gvdtxxZsz2f52md+YoV4YZu4yjMArjwO7ZwE7K4av",
-    "/build/admin.css": "sha384-NMnc2b6jJOZO4QiUk4TgitF+ipl41B2+0TFmAwGqpQ6cinY6Q6mb1watPtAAWkAZ",
-    "/build/search.js": "sha384-R/BW5h0YHjTYt/CVNZNOPDSuk0IQsvSSQZeP9hPpBtEkI4pBWMkBX4CAQnQQkFvt"
+    "/build/admin.js": "sha384-nicrzvXIMGjWH5/pdimaGfVfn2LB/i2RxpKGp5XiWyspyQj6VmrfxlybhN5W+ksw",
+    "/build/admin.css": "sha384-ilLLAgcQxfeIVl6jV3AsZ2jmrWwgECQptl9HYwqc2NpYuTl6FEW46DBpDk5Q76sp",
+    "/build/search.js": "sha384-mmhQLZ7DRLI71dJilhS384iek0VyZaGARlhbLwwNgjsBtMlzb58H1LZO0MWe5w+b"
   }
 }

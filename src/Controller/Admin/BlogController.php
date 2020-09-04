@@ -15,7 +15,6 @@ use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use App\Security\PostVoter;
-use App\Utils\Slugger;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -51,8 +50,8 @@ class BlogController extends AbstractController
      *     could move this annotation to any other controller while maintaining
      *     the route name and therefore, without breaking any existing link.
      *
-     * @Route("/", methods={"GET"}, name="admin_index")
-     * @Route("/", methods={"GET"}, name="admin_post_index")
+     * @Route("/", methods="GET", name="admin_index")
+     * @Route("/", methods="GET", name="admin_post_index")
      */
     public function index(PostRepository $posts): Response
     {
@@ -64,7 +63,7 @@ class BlogController extends AbstractController
     /**
      * Creates a new Post entity.
      *
-     * @Route("/new", methods={"GET", "POST"}, name="admin_post_new")
+     * @Route("/new", methods="GET|POST", name="admin_post_new")
      *
      * NOTE: the Method annotation is optional, but it's a recommended practice
      * to constraint the HTTP methods each controller responds to (by default
@@ -75,7 +74,7 @@ class BlogController extends AbstractController
         $post = new Post();
         $post->setAuthor($this->getUser());
 
-        // See https://symfony.com/doc/current/book/forms.html#submitting-forms-with-multiple-buttons
+        // See https://symfony.com/doc/current/form/multiple_buttons.html
         $form = $this->createForm(PostType::class, $post)
             ->add('saveAndCreateNew', SubmitType::class);
 
@@ -84,10 +83,8 @@ class BlogController extends AbstractController
         // the isSubmitted() method is completely optional because the other
         // isValid() method already checks whether the form is submitted.
         // However, we explicitly add it to improve code readability.
-        // See https://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
+        // See https://symfony.com/doc/current/forms.html#processing-forms
         if ($form->isSubmitted() && $form->isValid()) {
-            $post->setSlug(Slugger::slugify($post->getTitle()));
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush();
@@ -95,7 +92,7 @@ class BlogController extends AbstractController
             // Flash messages are used to notify the user about the result of the
             // actions. They are deleted automatically from the session as soon
             // as they are accessed.
-            // See https://symfony.com/doc/current/book/controller.html#flash-messages
+            // See https://symfony.com/doc/current/controller.html#flash-messages
             $this->addFlash('success', 'post.created_successfully');
 
             if ($form->get('saveAndCreateNew')->isClicked()) {
@@ -114,7 +111,7 @@ class BlogController extends AbstractController
     /**
      * Finds and displays a Post entity.
      *
-     * @Route("/{id<\d+>}", methods={"GET"}, name="admin_post_show")
+     * @Route("/{id<\d+>}", methods="GET", name="admin_post_show")
      */
     public function show(Post $post): Response
     {
@@ -130,7 +127,7 @@ class BlogController extends AbstractController
     /**
      * Displays a form to edit an existing Post entity.
      *
-     * @Route("/{id<\d+>}/edit",methods={"GET", "POST"}, name="admin_post_edit")
+     * @Route("/{id<\d+>}/edit", methods="GET|POST", name="admin_post_edit")
      * @IsGranted("edit", subject="post", message="Posts can only be edited by their authors.")
      */
     public function edit(Request $request, Post $post): Response
@@ -139,7 +136,6 @@ class BlogController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $post->setSlug(Slugger::slugify($post->getTitle()));
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'post.updated_successfully');
@@ -156,7 +152,7 @@ class BlogController extends AbstractController
     /**
      * Deletes a Post entity.
      *
-     * @Route("/{id}/delete", methods={"POST"}, name="admin_post_delete")
+     * @Route("/{id}/delete", methods="POST", name="admin_post_delete")
      * @IsGranted("delete", subject="post")
      */
     public function delete(Request $request, Post $post): Response

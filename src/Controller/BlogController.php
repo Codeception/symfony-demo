@@ -13,7 +13,7 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Post;
-use App\Events\CommentCreatedEvent;
+use App\Event\CommentCreatedEvent;
 use App\Form\CommentType;
 use App\Repository\PostRepository;
 use App\Repository\TagRepository;
@@ -37,14 +37,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class BlogController extends AbstractController
 {
     /**
-     * @Route("/", defaults={"page": "1", "_format"="html"}, methods={"GET"}, name="blog_index")
-     * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, methods={"GET"}, name="blog_rss")
-     * @Route("/page/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods={"GET"}, name="blog_index_paginated")
+     * @Route("/", defaults={"page": "1", "_format"="html"}, methods="GET", name="blog_index")
+     * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, methods="GET", name="blog_rss")
+     * @Route("/page/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods="GET", name="blog_index_paginated")
      * @Cache(smaxage="10")
      *
      * NOTE: For standard formats, Symfony will also automatically choose the best
      * Content-Type header for the response.
-     * See https://symfony.com/doc/current/quick_tour/the_controller.html#using-formats
+     * See https://symfony.com/doc/current/routing.html#special-parameters
      */
     public function index(Request $request, int $page, string $_format, PostRepository $posts, TagRepository $tags): Response
     {
@@ -56,14 +56,15 @@ class BlogController extends AbstractController
 
         // Every template name also has two extensions that specify the format and
         // engine for that template.
-        // See https://symfony.com/doc/current/templating.html#template-suffix
+        // See https://symfony.com/doc/current/templates.html#template-naming
         return $this->render('blog/index.'.$_format.'.twig', [
             'paginator' => $latestPosts,
+            'tagName' => $tag ? $tag->getName() : null,
         ]);
     }
 
     /**
-     * @Route("/posts/{slug}", methods={"GET"}, name="blog_post")
+     * @Route("/posts/{slug}", methods="GET", name="blog_post")
      *
      * NOTE: The $post controller argument is automatically injected by Symfony
      * after performing a database query looking for a Post with the 'slug'
@@ -83,7 +84,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/comment/{postSlug}/new", methods={"POST"}, name="comment_new")
+     * @Route("/comment/{postSlug}/new", methods="POST", name="comment_new")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @ParamConverter("post", options={"mapping": {"postSlug": "slug"}})
      *
@@ -140,16 +141,17 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/search", methods={"GET"}, name="blog_search")
+     * @Route("/search", methods="GET", name="blog_search")
      */
     public function search(Request $request, PostRepository $posts): Response
     {
-        if (!$request->isXmlHttpRequest()) {
-            return $this->render('blog/search.html.twig');
-        }
-
         $query = $request->query->get('q', '');
         $limit = $request->query->get('l', 10);
+
+        if (!$request->isXmlHttpRequest()) {
+            return $this->render('blog/search.html.twig', ['query' => $query]);
+        }
+
         $foundPosts = $posts->findBySearchQuery($query, $limit);
 
         $results = [];
