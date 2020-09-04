@@ -19,6 +19,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 /**
  * A console command that lists all the existing users.
@@ -28,9 +30,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  *
  *     $ php bin/console app:list-users
  *
+ * Check out the code of the src/Command/AddUserCommand.php file for
+ * the full explanation about Symfony commands.
+ *
  * See https://symfony.com/doc/current/console.html
- * For more advanced uses, commands can be defined as services too. See
- * https://symfony.com/doc/current/console/commands_as_services.html
  *
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
  */
@@ -43,7 +46,7 @@ class ListUsersCommand extends Command
     private $emailSender;
     private $users;
 
-    public function __construct(\Swift_Mailer $mailer, $emailSender, UserRepository $users)
+    public function __construct(MailerInterface $mailer, $emailSender, UserRepository $users)
     {
         parent::__construct();
 
@@ -132,14 +135,12 @@ HELP
      */
     private function sendReport(string $contents, string $recipient): void
     {
-        // See https://symfony.com/doc/current/email.html
-        $message = $this->mailer->createMessage()
-            ->setSubject(sprintf('app:list-users report (%s)', date('Y-m-d H:i:s')))
-            ->setFrom($this->emailSender)
-            ->setTo($recipient)
-            ->setBody($contents, 'text/plain')
-        ;
+        $email = (new Email())
+            ->from($this->emailSender)
+            ->to($recipient)
+            ->subject(sprintf('app:list-users report (%s)', date('Y-m-d H:i:s')))
+            ->text($contents);
 
-        $this->mailer->send($message);
+        $this->mailer->send($email);
     }
 }

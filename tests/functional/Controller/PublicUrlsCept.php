@@ -12,6 +12,6 @@ $publicUrls = [
 
 foreach ($publicUrls as $url) {
     $I->amOnPage($url);
-    $I->seeResponseCodeIs(200);
+    $I->seeResponseCodeIsSuccessful();
     $I->seeCurrentUrlEquals($url);
 }

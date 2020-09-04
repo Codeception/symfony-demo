@@ -47,7 +47,7 @@ class CheckRequirementsSubscriber implements EventSubscriberInterface
             // Errors are one of the events defined by the Console. See the
             // rest here: https://symfony.com/doc/current/components/console/events.html
             ConsoleEvents::ERROR => 'handleConsoleError',
-            // See: http://api.symfony.com/master/Symfony/Component/HttpKernel/KernelEvents.html
+            // See: https://symfony.com/doc/current/components/http_kernel.html#component-http-kernel-event-table
             KernelEvents::EXCEPTION => 'handleKernelException',
         ];
     }
@@ -85,7 +85,7 @@ class CheckRequirementsSubscriber implements EventSubscriberInterface
 
         // Check if SQLite is enabled
         if ($isDriverException && $this->isSQLitePlatform() && !\extension_loaded('sqlite3')) {
-            $event->setException(new \Exception('PHP extension "sqlite3" must be enabled because, by default, the Symfony Demo application uses SQLite to store its information.'));
+            $event->setThrowable(new \Exception('PHP extension "sqlite3" must be enabled because, by default, the Symfony Demo application uses SQLite to store its information.'));
         }
     }
 

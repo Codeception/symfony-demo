@@ -16,89 +16,87 @@ use PHPUnit\Framework\TestCase;
 
 class ValidatorTest extends TestCase
 {
-    private $object;
+    private $validator;
 
-    public function __construct()
+    protected function setUp(): void
     {
-        parent::__construct();
-
-        $this->object = new Validator();
+        $this->validator = new Validator();
     }
 
-    public function testValidateUsername()
+    public function testValidateUsername(): void
     {
         $test = 'username';
 
-        $this->assertSame($test, $this->object->validateUsername($test));
+        $this->assertSame($test, $this->validator->validateUsername($test));
     }
 
-    public function testValidateUsernameEmpty()
+    public function testValidateUsernameEmpty(): void
     {
         $this->expectException('Exception');
         $this->expectExceptionMessage('The username can not be empty.');
-        $this->object->validateUsername(null);
+        $this->validator->validateUsername(null);
     }
 
-    public function testValidateUsernameInvalid()
+    public function testValidateUsernameInvalid(): void
     {
         $this->expectException('Exception');
         $this->expectExceptionMessage('The username must contain only lowercase latin characters and underscores.');
-        $this->object->validateUsername('INVALID');
+        $this->validator->validateUsername('INVALID');
     }
 
-    public function testValidatePassword()
+    public function testValidatePassword(): void
     {
         $test = 'password';
 
-        $this->assertSame($test, $this->object->validatePassword($test));
+        $this->assertSame($test, $this->validator->validatePassword($test));
     }
 
-    public function testValidatePasswordEmpty()
+    public function testValidatePasswordEmpty(): void
     {
         $this->expectException('Exception');
         $this->expectExceptionMessage('The password can not be empty.');
-        $this->object->validatePassword(null);
+        $this->validator->validatePassword(null);
     }
 
-    public function testValidatePasswordInvalid()
+    public function testValidatePasswordInvalid(): void
     {
         $this->expectException('Exception');
         $this->expectExceptionMessage('The password must be at least 6 characters long.');
-        $this->object->validatePassword('12345');
+        $this->validator->validatePassword('12345');
     }
 
-    public function testValidateEmail()
+    public function testValidateEmail(): void
     {
         $test = '@';
 
-        $this->assertSame($test, $this->object->validateEmail($test));
+        $this->assertSame($test, $this->validator->validateEmail($test));
     }
 
-    public function testValidateEmailEmpty()
+    public function testValidateEmailEmpty(): void
     {
         $this->expectException('Exception');
         $this->expectExceptionMessage('The email can not be empty.');
-        $this->object->validateEmail(null);
+        $this->validator->validateEmail(null);
     }
 
-    public function testValidateEmailInvalid()
+    public function testValidateEmailInvalid(): void
     {
         $this->expectException('Exception');
         $this->expectExceptionMessage('The email should look like a real email.');
-        $this->object->validateEmail('invalid');
+        $this->validator->validateEmail('invalid');
     }
 
-    public function testValidateFullName()
+    public function testValidateFullName(): void
     {
         $test = 'Full Name';
 
-        $this->assertSame($test, $this->object->validateFullName($test));
+        $this->assertSame($test, $this->validator->validateFullName($test));
     }
 
     public function testValidateFullNameEmpty()
     {
         $this->expectException('Exception');
         $this->expectExceptionMessage('The full name can not be empty.');
-        $this->object->validateFullName(null);
+        $this->validator->validateFullName(null);
     }
 }

@@ -1,11 +1,13 @@
 language: php
-sudo: false
+
+sudo: true
 
 cache:
   yarn: true
   directories:
     - $HOME/.composer/cache/files
     - ./bin/.phpunit
+    - ./vendor/codeception
 
 env:
   global:
@@ -16,19 +18,18 @@ matrix:
   include:
     - php: 7.2
     - php: 7.3
-    # 'php: nightly' is PHP 8.0
-    - php: 7.4snapshot
-  allow_failures:
-    - php: 7.4snapshot
+    - php: 7.4
 
 before_install:
-  - '[[ "$TRAVIS_PHP_VERSION" == "7.4snapshot" ]] || phpenv config-rm xdebug.ini'
+  - '[[ "$TRAVIS_PHP_VERSION" == "7.4" ]] || phpenv config-rm xdebug.ini'
   - composer self-update
+  - wget https://get.symfony.com/cli/installer -O - | bash
+  - export PATH="$HOME/.symfony/bin:$PATH"
 
 install:
-  - COMPOSER_MEMORY_LIMIT=-1 composer update
-  - 'php -S localhost:8000 -t public/ >/dev/null 2>&1 &'
-  - ./vendor/bin/codecept build
+  - COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction
+  - symfony server:ca:install --no-interaction --quiet
 
 script:
-  - ./vendor/bin/codecept run
+  - symfony serve -d
+  - vendor/bin/codecept run --colors
